@@ -6,12 +6,8 @@ def main()
   
   jupiter = Planet.new('Jupiter', 'stripey orange and white', mass_kg: 1.898e27, distance_from_sun_km: 778000000, fun_fact: 'twice as massive as all the other planets combined')
   
-  earth_facts = "#{earth.name} is a #{earth.color} planet. Fun fact: #{earth.name} is #{earth.fun_fact}."
-  
-  jupiter_facts = "#{jupiter.name} is a #{jupiter.color} planet. Fun fact: #{jupiter.name} is #{jupiter.fun_fact}."
-  
-  puts earth_facts
-  puts jupiter_facts
+  puts earth.summary
+  puts jupiter.summary
 end
 
 print main()
