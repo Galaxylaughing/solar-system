@@ -40,14 +40,12 @@ our_solar_system.add_planet(Planet.new("Jupiter", "stripey orange and white", ma
 our_solar_system.add_planet(Planet.new("Neptune", "blue with a dark blue eye", mass_kg: 1.024e26, distance_from_sun_km: 4495000000, fun_fact: "Only planet in the solar system not visible to the naked eye"))
 
 def find_distance_between(solar_system)
-  # get user input for planet names
-  # call solar_system.distance_between(planet_1, planet_2)
+  prompt = "Please enter the"
+  planet_1 = ask_for_planet_name(solar_system, prompt: (prompt + " first planet: "))
+  planet_2 = ask_for_planet_name(solar_system, prompt: (prompt + " second planet: "))
+  
+  puts "The distance between #{planet_1.name} and #{planet_2.name} is #{solar_system.distance_between(planet_1, planet_2)} km."
 end
-
-# venus
-# mass = 4.867e24
-# distance = 108200000
-# fun fact = The brightest object in the sky after the Sun and the Moon
 
 def ask_for_planet_property(property)
   print "Please enter the planet's #{property}:  "
@@ -86,10 +84,10 @@ def add_planet(solar_system)
   solar_system.add_planet(new_planet)
 end
 
-def ask_for_planet_name(solar_system)
+def ask_for_planet_name(solar_system, prompt:)
   keep_asking = true
   until !keep_asking
-    print "Please enter a planet: "
+    print prompt
     user_input = gets.chomp.downcase
     if solar_system.find_planet_by_name(user_input) == "No such planet found"
       puts "  #{user_input} is not a valid planet"
@@ -102,7 +100,7 @@ def ask_for_planet_name(solar_system)
 end
 
 def display_planet_details(solar_system)
-  planet = ask_for_planet_name(solar_system)
+  planet = ask_for_planet_name(solar_system, prompt: "Please enter a planet: ")
   puts planet.summary
 end
 
