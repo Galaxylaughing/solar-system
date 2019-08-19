@@ -26,6 +26,9 @@ describe 'the Planet class' do
   end
   
   it 'thows an error if given an insufficient value for distance' do
+    expect {
+      planet = Planet.new("Name", "color", mass_kg: 20, distance_from_sun_km: 0, fun_fact: "none")
+    }.must_raise ArgumentError
   end
   
 end
