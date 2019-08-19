@@ -27,9 +27,37 @@ end
 
 ########## WAVE 3 CODE
 
+# create solar system
 our_solar_system = SolarSystem.new(star_name: "Sol")
 
-earth = Planet.new("Earth", "blue-green", mass_kg: 5.972e24, distance_from_sun_km: 149600000, fun_fact: "Only planet known to support life")
-mars = Planet.new("Mars", "red", mass_kg: 6.39e23, distance_from_sun_km: 227900000, fun_fact: "Technically a cold desert world")
-jupiter = Planet.new("Jupiter", "stripey orange and white", mass_kg: 1.898e27, distance_from_sun_km: 778500000, fun_fact: "Twice as massive as all the other planets combined")
-neptune = Planet.new("Neptune", "blue with a dark blue eye", mass_kg: 1.024e26, distance_from_sun_km: 4495000000, fun_fact: "Only planet in the solar system not visible to the naked eye")
+# add some planets to the solar system
+our_solar_system.add_planet(Planet.new("Earth", "blue and green", mass_kg: 5.972e24, distance_from_sun_km: 149600000, fun_fact: "Only planet known to support life"))
+
+our_solar_system.add_planet(Planet.new("Mars", "red", mass_kg: 6.39e23, distance_from_sun_km: 227900000, fun_fact: "Technically a cold desert world"))
+
+our_solar_system.add_planet(Planet.new("Jupiter", "stripey orange and white", mass_kg: 1.898e27, distance_from_sun_km: 778500000, fun_fact: "Twice as massive as all the other planets combined"))
+
+our_solar_system.add_planet(Planet.new("Neptune", "blue with a dark blue eye", mass_kg: 1.024e26, distance_from_sun_km: 4495000000, fun_fact: "Only planet in the solar system not visible to the naked eye"))
+
+# Enter a control loop that repeatedly asks the user what to do next. The two options at this point are list planets and exit.
+def ask_user_for_commands(solar_system)
+  
+  user_input = ""
+  until !user_input
+    print "Please enter a command: "
+    user_input = gets.chomp.downcase.to_sym
+    
+    case user_input
+    when :exit
+      user_input = false
+    when :"list planets"
+      puts solar_system.list_planets()
+    else
+      puts "  #{user_input} is not a valid command"
+    end
+    
+  end
+  
+end
+
+ask_user_for_commands(our_solar_system)
