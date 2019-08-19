@@ -5,6 +5,7 @@ require 'minitest/reporters'
 require 'minitest/pride'
 
 require_relative '../lib/solar_system.rb'
+require_relative '../lib/planet.rb'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
@@ -31,6 +32,14 @@ class TestSolarSystem < Minitest::Test
   
   def test_planets_variable_is_an_array
     assert_instance_of Array, @solar_system.planets
+  end
+  
+  def test_add_planet_adds_planet_instance_to_list
+    mars = Planet.new("Mars", "red", mass_kg: 20, distance_from_sun_km: 20, fun_fact: "homeworld of the martians")
+    
+    @solar_system.add_planet(mars)
+    
+    assert @solar_system.planets.include?(mars)
   end
   
 end
