@@ -11,6 +11,9 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 describe 'the Planet class' do
   
   it 'must create a new planet instance' do
+    planet = Planet.new("Name", "color", mass_kg: 20, distance_from_sun_km: 20, fun_fact: "none")
+    
+    expect(planet).must_be_instance_of Planet
   end
   
   it 'must create reader methods' do
