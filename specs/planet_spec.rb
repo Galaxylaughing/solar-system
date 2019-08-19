@@ -8,33 +8,28 @@ require_relative '../lib/planet.rb'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
-describe 'the Planet class' do
+class TestPlanet < Minitest::Test
   
-  it 'must create a new planet instance' do
+  def test_planet_instantiation
     planet = Planet.new("Name", "color", mass_kg: 20, distance_from_sun_km: 20, fun_fact: "none")
-    
-    expect(planet).must_be_instance_of Planet
+    assert_instance_of Planet, planet
   end
   
-  it 'must create reader methods' do
+  def test_reader_methods
     mars_name = "Mars"
     mars_color = "red"
     
     mars = Planet.new(mars_name, mars_color, mass_kg: 20, distance_from_sun_km: 20, fun_fact: "none")
     
-    mars.color.must_equal mars_color
+    assert_equal mars.color, mars_color
   end
   
-  it 'thows an error if given an insufficient value for mass' do
-    expect {
-      planet = Planet.new("Name", "color", mass_kg: 0, distance_from_sun_km: 20, fun_fact: "none")
-    }.must_raise ArgumentError
+  def test_insufficient_mass_error    
+    assert_raises(ArgumentError) { Planet.new("Name", "color", mass_kg: 0, distance_from_sun_km: 20, fun_fact: "none") }
   end
   
-  it 'thows an error if given an insufficient value for distance' do
-    expect {
-      planet = Planet.new("Name", "color", mass_kg: 20, distance_from_sun_km: 0, fun_fact: "none")
-    }.must_raise ArgumentError
+  def test_insufficient_distance_error
+    assert_raises(ArgumentError) { Planet.new("Name", "color", mass_kg: 20, distance_from_sun_km: 0, fun_fact: "none") }
   end
   
 end

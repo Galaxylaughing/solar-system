@@ -13,7 +13,7 @@ class TestSolarSystem < Minitest::Test
     @solar_system = SolarSystem.new
   end
   
-  def test_that_solar_system_exists
-    @solar_system.wont_be_nil
+  def test_solar_system_instantiation
+    refute_nil @solar_system
   end
-end 
+end
