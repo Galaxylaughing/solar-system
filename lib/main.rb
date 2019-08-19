@@ -16,6 +16,11 @@ def main()
   
   list = solar_system.list_planets
   puts list
+  
+  found_planet = solar_system.find_planet_by_name("jUPitEr")
+  puts found_planet
+  puts found_planet.summary
+  
 end
 
 print main()

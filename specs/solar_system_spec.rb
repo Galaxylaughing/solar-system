@@ -56,4 +56,30 @@ class TestSolarSystem < Minitest::Test
     assert_equal @solar_system.list_planets, desired_output
   end
   
+  def test_find_planet_by_name_finds_planet
+    mars = Planet.new("Mars", "red", mass_kg: 20, distance_from_sun_km: 20, fun_fact: "homeworld of the martians")
+    earth = Planet.new("Earth", "blue-green", mass_kg: 5.972e24, distance_from_sun_km: 149600000, fun_fact: "Only planet known to support life")
+    jupiter = Planet.new('Jupiter', 'stripey orange and white', mass_kg: 1.898e27, distance_from_sun_km: 778000000, fun_fact: 'Twice as massive as all the other planets combined')
+    
+    @solar_system.add_planet(mars)
+    @solar_system.add_planet(earth)
+    @solar_system.add_planet(jupiter)
+    
+    assert_equal @solar_system.find_planet_by_name("MarS"), mars
+  end
+  
+  def test_find_planet_by_name_gives_error_message_if_not_found
+    assert_equal @solar_system.find_planet_by_name("mars"), "No such planet found"
+  end
+  
+  def test_find_multiple_planets_of_the_same_name
+    mars = Planet.new("Mars", "red", mass_kg: 20, distance_from_sun_km: 20, fun_fact: "homeworld of the martians")
+    earth = Planet.new("Mars", "blue-green", mass_kg: 5.972e24, distance_from_sun_km: 149600000, fun_fact: "Only planet known to support life")
+    
+    @solar_system.add_planet(mars)
+    @solar_system.add_planet(earth)
+    
+    assert_equal @solar_system.find_planet_by_name("mars"), "Multiple planets of that name were found. These were:\n1. #{mars}\n2. #{earth}"
+  end
+  
 end
