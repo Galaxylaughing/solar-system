@@ -3,7 +3,7 @@ class Planet
   
   attr_reader :name, :color, :mass_kg, :distance_from_sun_km, :fun_fact
   
-  def initialize(name, color, mass_kg:, distance_from_sun_km:, fun_fact:)
+  def initialize(name, color, mass_kg:, distance_from_sun_km:, fun_fact: "there are no fun facts for this planet")
     @name = name
     @color = color
     (mass_kg > 0) ? (@mass_kg = mass_kg) : (raise ArgumentError, "Given insufficient mass value")
@@ -12,7 +12,7 @@ class Planet
   end
   
   def summary
-    return "#{@name} is a #{@color} planet #{@distance_from_sun_km} km from the sun. It has a mass of #{@mass_kg} kg. Fun fact, #{@name} is #{@fun_fact}."
+    return "#{@name} is a #{@color} planet #{@distance_from_sun_km} km from the sun. It has a mass of #{@mass_kg} kg. Fun fact about #{@name}: #{@fun_fact}."
   end
   
 end
