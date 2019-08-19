@@ -39,6 +39,24 @@ our_solar_system.add_planet(Planet.new("Jupiter", "stripey orange and white", ma
 
 our_solar_system.add_planet(Planet.new("Neptune", "blue with a dark blue eye", mass_kg: 1.024e26, distance_from_sun_km: 4495000000, fun_fact: "Only planet in the solar system not visible to the naked eye"))
 
+# ask user for name of planet they wish to learn about, and then display the details of that planet.
+def display_planet_details(solar_system)
+  
+  keep_asking = true
+  until !keep_asking
+    print "Please enter a planet: "
+    user_input = gets.chomp.downcase
+    
+    if solar_system.find_planet_by_name(user_input) == "No such planet found"
+      puts "  #{user_input} is not a valid planet"
+    else
+      puts solar_system.find_planet_by_name(user_input).summary
+      keep_asking = false
+    end
+  end
+  
+end
+
 # Enter a control loop that repeatedly asks the user what to do next. The two options at this point are list planets and exit.
 def ask_user_for_commands(solar_system)
   
@@ -52,6 +70,8 @@ def ask_user_for_commands(solar_system)
       user_input = false
     when :"list planets"
       puts solar_system.list_planets()
+    when :"planet details"
+      display_planet_details(solar_system)
     else
       puts "  #{user_input} is not a valid command"
     end
