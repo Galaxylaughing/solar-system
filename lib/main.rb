@@ -50,13 +50,24 @@ def ask_for_planet_property(property)
   return user_input
 end
 
+def ensure_valid_number(planet, property_symbol, name_of_property)
+  until planet[property_symbol]
+    user_mass = ask_for_planet_property(name_of_property).to_i
+    if user_mass > 0
+      planet[property_symbol] = user_mass
+    else
+      puts "  You did not enter a valid #{name_of_property}"
+    end
+  end
+end
+
 def ask_for_planet_information()
   planet = {}
   
   planet[:name] = ask_for_planet_property("name").capitalize
   planet[:color] = ask_for_planet_property("color")
-  planet[:mass_kg] = ask_for_planet_property("mass in kilograms").to_i
-  planet[:distance_from_sun_km] = ask_for_planet_property("distance from the sun in kilometers").to_i
+  ensure_valid_number(planet, :mass_kg, "mass in kilograms")
+  ensure_valid_number(planet, :distance_from_sun_km, "distance from the sun in kilometers")
   planet[:fun_fact] = ask_for_planet_property("fun fact")
   
   return planet
