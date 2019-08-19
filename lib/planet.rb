@@ -6,8 +6,8 @@ class Planet
   def initialize(name, color, mass_kg:, distance_from_sun_km:, fun_fact:)
     @name = name
     @color = color
-    @mass_kg = mass_kg
-    @distance_from_sun_km = distance_from_sun_km
+    (mass_kg > 0) ? (@mass_kg = mass_kg) : (raise ArgumentError, "Given insufficient mass value")
+    (distance_from_sun_km > 0) ? (@distance_from_sun_km = distance_from_sun_km) : (raise ArgumentError, "Given insufficient distance value")
     @fun_fact = fun_fact
   end
   
