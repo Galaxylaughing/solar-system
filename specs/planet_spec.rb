@@ -14,9 +14,12 @@ describe 'the Planet class' do
   end
   
   it 'must create reader methods' do
-  end
-  
-  it 'must create writer methods' do
+    mars_name = "Mars"
+    mars_color = "red"
+    
+    mars = Planet.new(mars_name, mars_color, mass_kg: 20, distance_from_sun_km: 20, fun_fact: "none")
+    
+    mars.color.must_equal mars_color
   end
   
   it 'thows an error if given an insufficient value for mass' do
