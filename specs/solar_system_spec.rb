@@ -42,4 +42,18 @@ class TestSolarSystem < Minitest::Test
     assert @solar_system.planets.include?(mars)
   end
   
+  def test_return_list_of_planets
+    mars = Planet.new("Mars", "red", mass_kg: 20, distance_from_sun_km: 20, fun_fact: "homeworld of the martians")
+    earth = Planet.new("Earth", "blue-green", mass_kg: 5.972e24, distance_from_sun_km: 149600000, fun_fact: "Only planet known to support life")
+    jupiter = Planet.new('Jupiter', 'stripey orange and white', mass_kg: 1.898e27, distance_from_sun_km: 778000000, fun_fact: 'Twice as massive as all the other planets combined')
+    
+    @solar_system.add_planet(mars)
+    @solar_system.add_planet(earth)
+    @solar_system.add_planet(jupiter)
+    
+    desired_output = "Planets orbiting Arcturus\n1. Mars\n2. Earth\n3. Jupiter"
+    
+    assert_equal @solar_system.list_planets, desired_output
+  end
+  
 end
