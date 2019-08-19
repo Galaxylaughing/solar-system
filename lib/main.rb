@@ -39,6 +39,11 @@ our_solar_system.add_planet(Planet.new("Jupiter", "stripey orange and white", ma
 
 our_solar_system.add_planet(Planet.new("Neptune", "blue with a dark blue eye", mass_kg: 1.024e26, distance_from_sun_km: 4495000000, fun_fact: "Only planet in the solar system not visible to the naked eye"))
 
+def find_distance_between(solar_system)
+  # get user input for planet names
+  # call solar_system.distance_between(planet_1, planet_2)
+end
+
 # venus
 # mass = 4.867e24
 # distance = 108200000
@@ -52,9 +57,9 @@ end
 
 def ensure_valid_number(planet, property_symbol, name_of_property)
   until planet[property_symbol]
-    user_mass = ask_for_planet_property(name_of_property).to_i
-    if user_mass > 0
-      planet[property_symbol] = user_mass
+    user_property = ask_for_planet_property(name_of_property).to_i
+    if user_property > 0
+      planet[property_symbol] = user_property
     else
       puts "  You did not enter a valid #{name_of_property}"
     end
@@ -81,7 +86,7 @@ def add_planet(solar_system)
   solar_system.add_planet(new_planet)
 end
 
-def display_planet_details(solar_system)
+def ask_for_planet_name(solar_system)
   keep_asking = true
   until !keep_asking
     print "Please enter a planet: "
@@ -89,10 +94,16 @@ def display_planet_details(solar_system)
     if solar_system.find_planet_by_name(user_input) == "No such planet found"
       puts "  #{user_input} is not a valid planet"
     else
-      puts solar_system.find_planet_by_name(user_input).summary
+      planet = solar_system.find_planet_by_name(user_input)
       keep_asking = false
     end
   end
+  return planet
+end
+
+def display_planet_details(solar_system)
+  planet = ask_for_planet_name(solar_system)
+  puts planet.summary
 end
 
 def ask_user_for_commands(solar_system)
@@ -111,6 +122,8 @@ def ask_user_for_commands(solar_system)
       display_planet_details(solar_system)
     when :"add planet"
       add_planet(solar_system)
+    when :"distance between planets"
+      find_distance_between(solar_system)
     else
       puts "  #{user_input} is not a valid command"
     end
