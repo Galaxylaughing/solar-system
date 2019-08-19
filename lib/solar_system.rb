@@ -42,4 +42,13 @@ class SolarSystem
     return found_planet
   end
   
+  def distance_between(planet_1, planet_2)
+    if @planets.include?(planet_1) && @planets.include?(planet_2)
+      distance = (planet_1.distance_from_sun_km - planet_2.distance_from_sun_km).abs
+    else
+      raise ArgumentError, "Not all planets in solar system"
+    end
+    return distance
+  end
+  
 end

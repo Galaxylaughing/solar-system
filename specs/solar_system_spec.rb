@@ -82,4 +82,23 @@ class TestSolarSystem < Minitest::Test
     assert_equal @solar_system.find_planet_by_name("mars"), "Multiple planets of that name were found. These were:\n1. #{mars}\n2. #{earth}"
   end
   
+  def test_distance_between_method_works_with_planets
+    earth = Planet.new("Earth", "blue-green", mass_kg: 5.972e24, distance_from_sun_km: 149600000, fun_fact: "Only planet known to support life")
+    jupiter = Planet.new('Jupiter', 'stripey orange and white', mass_kg: 1.898e27, distance_from_sun_km: 778000000, fun_fact: 'Twice as massive as all the other planets combined')
+    
+    @solar_system.add_planet(earth)
+    @solar_system.add_planet(jupiter)
+    
+    assert_equal @solar_system.distance_between(earth, jupiter), 628400000
+  end
+  
+  def test_distance_between_method_raises_error_with_nonplanets
+    earth = Planet.new("Earth", "blue-green", mass_kg: 5.972e24, distance_from_sun_km: 149600000, fun_fact: "Only planet known to support life")
+    jupiter = Planet.new('Jupiter', 'stripey orange and white', mass_kg: 1.898e27, distance_from_sun_km: 778000000, fun_fact: 'Twice as massive as all the other planets combined')
+    
+    @solar_system.add_planet(earth)
+    
+    assert_raises(ArgumentError) { @solar_system.distance_between(earth, jupiter) }
+  end
+  
 end
