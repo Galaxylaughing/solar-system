@@ -27,6 +27,8 @@ end
 
 ########## WAVE 3 CODE
 
+## VARIABLES
+
 # create solar system
 our_solar_system = SolarSystem.new(star_name: "Sol")
 
@@ -38,6 +40,8 @@ our_solar_system.add_planet(Planet.new("Mars", "red", mass_kg: 6.39e23, distance
 our_solar_system.add_planet(Planet.new("Jupiter", "stripey orange and white", mass_kg: 1.898e27, distance_from_sun_km: 778500000, fun_fact: "Twice as massive as all the other planets combined"))
 
 our_solar_system.add_planet(Planet.new("Neptune", "blue with a dark blue eye", mass_kg: 1.024e26, distance_from_sun_km: 4495000000, fun_fact: "Only planet in the solar system not visible to the naked eye"))
+
+## METHODS
 
 def find_distance_between(solar_system)
   prompt = "Please enter the"
@@ -111,7 +115,6 @@ def display_planet_details(solar_system)
 end
 
 def ask_user_for_commands(solar_system)
-  
   user_input = ""
   until !user_input
     print "Please enter a command: "
@@ -133,7 +136,8 @@ def ask_user_for_commands(solar_system)
     end
     
   end
-  
 end
+
+## MAIN CODE
 
 ask_user_for_commands(our_solar_system)
