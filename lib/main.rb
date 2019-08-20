@@ -64,14 +64,26 @@ def ensure_valid_number(planet, property_symbol, name_of_property)
   end
 end
 
+def ensure_valid_string(planet, property_symbol, name_of_property, capitalize: false)
+  until planet[property_symbol]
+    user_property = ask_for_planet_property(name_of_property)
+    if !!(user_property =~ /\A[-a-zA-Z0-9_\s]+\Z/)
+      user_property = user_property.capitalize if capitalize == true
+      planet[property_symbol] = user_property
+    else
+      puts "  You did not enter a valid #{name_of_property}"
+    end
+  end
+end
+
 def get_planet_details()
   planet = {}
   
-  planet[:name] = ask_for_planet_property("name").capitalize
-  planet[:color] = ask_for_planet_property("color")
+  ensure_valid_string(planet, :name, "name", capitalize: true)
+  ensure_valid_string(planet, :color, "color")
   ensure_valid_number(planet, :mass_kg, "mass in kilograms")
   ensure_valid_number(planet, :distance_from_sun_km, "distance from the sun in kilometers")
-  planet[:fun_fact] = ask_for_planet_property("fun fact")
+  ensure_valid_string(planet, :fun_fact, "fun fact")
   
   return planet
 end
