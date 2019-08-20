@@ -53,37 +53,34 @@ def ask_for_planet_property(property)
   return user_input
 end
 
-def ensure_valid_number(planet, property_symbol, name_of_property)
+def ensure_valid(planet, property_symbol, name_of_property, is_number: false, is_string: false, capitalize: false)
+  
   until planet[property_symbol]
-    user_property = ask_for_planet_property(name_of_property).to_i
-    if user_property > 0
-      planet[property_symbol] = user_property
-    else
-      puts "  You did not enter a valid #{name_of_property}"
-    end
-  end
-end
-
-def ensure_valid_string(planet, property_symbol, name_of_property, capitalize: false)
-  until planet[property_symbol]
+    
     user_property = ask_for_planet_property(name_of_property)
-    if !!(user_property =~ /\A[-a-zA-Z0-9_\s]+\Z/)
+    
+    if is_number == true && user_property.to_i > 0
+      user_property = user_property.to_i
+      planet[property_symbol] = user_property
+    elsif is_string == true && !!(user_property =~ /\A[-a-zA-Z0-9_\s]+\Z/)
       user_property = user_property.capitalize if capitalize == true
       planet[property_symbol] = user_property
     else
       puts "  You did not enter a valid #{name_of_property}"
     end
+    
   end
+  
 end
 
 def get_planet_details()
   planet = {}
   
-  ensure_valid_string(planet, :name, "name", capitalize: true)
-  ensure_valid_string(planet, :color, "color")
-  ensure_valid_number(planet, :mass_kg, "mass in kilograms")
-  ensure_valid_number(planet, :distance_from_sun_km, "distance from the sun in kilometers")
-  ensure_valid_string(planet, :fun_fact, "fun fact")
+  ensure_valid(planet, :name, "name", is_string: true, capitalize: true)
+  ensure_valid(planet, :color, "color", is_string: true)
+  ensure_valid(planet, :mass_kg, "mass in kilograms", is_number: true)
+  ensure_valid(planet, :distance_from_sun_km, "distance from the sun in kilometers", is_number: true)
+  ensure_valid(planet, :fun_fact, "fun fact", is_string: true)
   
   return planet
 end
