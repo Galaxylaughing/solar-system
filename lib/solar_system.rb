@@ -10,7 +10,11 @@ class SolarSystem
   end
   
   def add_planet(planet)
-    @planets.push(planet)
+    if planet.class == Planet
+      @planets.push(planet)
+    else
+      raise ArgumentError, "#{planet} is not a planet."
+    end
   end
   
   def list_planets()

@@ -64,7 +64,7 @@ def ensure_valid_number(planet, property_symbol, name_of_property)
   end
 end
 
-def ask_for_planet_information()
+def get_planet_details()
   planet = {}
   
   planet[:name] = ask_for_planet_property("name").capitalize
@@ -76,8 +76,8 @@ def ask_for_planet_information()
   return planet
 end
 
-def add_planet(solar_system)
-  planet_info = ask_for_planet_information()
+def add_new_planet(solar_system)
+  planet_info = get_planet_details()
   
   new_planet = Planet.new(planet_info[:name], planet_info[:color], mass_kg: planet_info[:mass_kg], distance_from_sun_km: planet_info[:distance_from_sun_km], fun_fact: planet_info[:fun_fact])
   
@@ -119,7 +119,7 @@ def ask_user_for_commands(solar_system)
     when :"planet details"
       display_planet_details(solar_system)
     when :"add planet"
-      add_planet(solar_system)
+      add_new_planet(solar_system)
     when :"distance between planets"
       find_distance_between(solar_system)
     else

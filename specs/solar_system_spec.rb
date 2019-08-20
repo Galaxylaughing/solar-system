@@ -42,6 +42,11 @@ class TestSolarSystem < Minitest::Test
     assert @solar_system.planets.include?(mars)
   end
   
+  def test_add_planet_does_not_add_nonplanet
+    mars = ["Mars", "red", 20, 200, "home of the martians"]
+    assert_raises(ArgumentError) { @solar_system.add_planet(mars) }  
+  end
+  
   def test_return_list_of_planets
     mars = Planet.new("Mars", "red", mass_kg: 20, distance_from_sun_km: 20, fun_fact: "homeworld of the martians")
     earth = Planet.new("Earth", "blue-green", mass_kg: 5.972e24, distance_from_sun_km: 149600000, fun_fact: "Only planet known to support life")
