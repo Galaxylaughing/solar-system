@@ -1,5 +1,6 @@
 require_relative "planet.rb"
 require_relative "solar_system"
+require_relative "user.rb"
 
 ## VARIABLES
 # create solar system
@@ -13,6 +14,20 @@ our_solar_system.add_planet(Planet.new("Mars", "red", mass_kg: 6.39e23, distance
 our_solar_system.add_planet(Planet.new("Jupiter", "stripey orange and white", mass_kg: 1.898e27, distance_from_sun_km: 778500000, fun_fact: "Twice as massive as all the other planets combined"))
 
 our_solar_system.add_planet(Planet.new("Neptune", "blue with a dark blue eye", mass_kg: 1.024e26, distance_from_sun_km: 4495000000, fun_fact: "Only planet in the solar system not visible to the naked eye"))
+
+# create second solar system
+kepler_system = SolarSystem.new(star_name: "Kepler-20")
+
+kepler_system.add_planet(Planet.new("Kepler-20c", "unknown color", mass_kg: 7.6148972e25, distance_from_sun_km: 290.0, fun_fact: "Has a mass similar to Neptune, but is much closer to Kepler-20 than Neptune is to Sol"))
+
+kepler_system.add_planet(Planet.new("Kepler-20b", "rocky", mass_kg: 5.786868e25, distance_from_sun_km: 290.0, fun_fact: "Classified as a 'Super-Earth'"))
+
+kepler_system.add_planet(Planet.new("Kepler-20d", "unknown color", mass_kg: 6.0132068e25, distance_from_sun_km: 290.0, fun_fact: "Technically the furthest planet from Kepler-20, but has an orbit similar to Mercury so it is still a hot planet"))
+
+kepler_system.add_planet(Planet.new("Kepler-20e", "dark red", mass_kg: 1.839376e25, distance_from_sun_km: 290.0, fun_fact: "First planet smaller than Earth discovered to orbit a sun other than Sol"))
+
+kepler_system.add_planet(Planet.new("Kepler-20f", "unknown color", mass_kg: 6.0132068e25, distance_from_sun_km: 290.0, fun_fact: "Planet with the closest radius to Earth"))
+
 
 ## METHODS
 def find_distance_between(solar_system)
