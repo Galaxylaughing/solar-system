@@ -54,23 +54,19 @@ def ask_for_planet_property(property)
 end
 
 def ensure_valid(planet, property_symbol, name_of_property, is_number: false, is_string: false, capitalize: false)
-  
   until planet[property_symbol]
-    
     user_property = ask_for_planet_property(name_of_property)
-    
+    is_valid = true
     if is_number == true && user_property.to_i > 0
       user_property = user_property.to_i
-      planet[property_symbol] = user_property
     elsif is_string == true && !!(user_property =~ /\A[-a-zA-Z0-9_\s]+\Z/)
       user_property = user_property.capitalize if capitalize == true
-      planet[property_symbol] = user_property
     else
       puts "  You did not enter a valid #{name_of_property}"
+      is_valid = false
     end
-    
+    (planet[property_symbol] = user_property) if is_valid == true
   end
-  
 end
 
 def get_planet_details()
