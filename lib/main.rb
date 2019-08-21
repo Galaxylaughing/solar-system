@@ -110,6 +110,32 @@ def display_planet_details(solar_system)
   puts planet.summary
 end
 
+def ask_for_system_name(constellation, prompt:)
+  keep_asking = true
+  until !keep_asking
+    print prompt
+    user_input = gets.chomp.downcase
+    if constellation.find_system_by_name(user_input) == "No such system found"
+      puts "  #{user_input} is not a valid solar system"
+    else
+      solar_system = constellation.find_system_by_name(user_input)
+      keep_asking = false
+    end
+  end
+  return solar_system
+end
+
+def ask_user_for_system(constellation)
+  user_choice = ask_for_system_name(constellation, prompt: "Please enter a solar system: ")
+  return user_choice
+end
+
+def switch_systems(user, constellation, current_system)
+  user_choice = ask_user_for_system(constellation)
+  current_system = user.switch_systems(user_choice, current_system)
+  return current_system
+end
+
 def ask_user_for_commands(constellation)
   # establish default solar system
   current_solar_system = constellation.systems_list[0]
@@ -125,11 +151,12 @@ def ask_user_for_commands(constellation)
     case user_input
     when :exit
       user_input = false
+    when :"current system"
+      puts "The current solar system is: #{current_solar_system.star_name} System"
     when :"list systems"
       puts constellation.list_systems()
     when :"switch system"
-      # ask user what system they want to switch to
-      # current_user.switch_systems(new_system)
+      current_solar_system = switch_systems(current_user, constellation, current_solar_system)
     when :"list planets"
       puts current_solar_system.list_planets()
     when :"planet details"

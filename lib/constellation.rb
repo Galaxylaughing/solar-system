@@ -19,4 +19,21 @@ class Constellation
     return list
   end
   
+  def find_system_by_name(star_name)
+    found_system = "No such system found"
+    
+    systems_found = @systems_list.select do |system_instance|
+      system_instance.star_name.downcase == star_name.downcase
+    end
+    
+    if systems_found.length == 1
+      found_system = systems_found[0]
+    elsif planets_found.length > 1
+      found_system = "Multiple systems with that star were found. These were:"
+      systems_found.each_with_index do |system_instance, index|
+        found_system << "\n#{index + 1}. #{system_instance}"
+      end
+    end
+  end
+  
 end
