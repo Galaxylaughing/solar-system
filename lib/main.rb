@@ -174,3 +174,6 @@ end
 
 ## MAIN CODE
 ask_user_for_commands(current_constellation)
+
+# still to do:
+# see if I can DRY up the ask_user_for_system/ask_for_system_name and ask_user_for_planet/ask_for_planet_name methods

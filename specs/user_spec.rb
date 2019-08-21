@@ -28,13 +28,18 @@ class TestUser < Minitest::Test
   end
   
   def test_that_location_switching_works
-    @user.switch_systems(@kepler_system)
+    @user.switch_systems(@kepler_system, @our_solar_system)
     assert_equal @user.location, @kepler_system
   end
   
   def test_that_user_cannot_switch_to_nonsystem
     new_system = "Kepler-20"
-    assert_raises(ArgumentError) { @user.switch_systems(new_system) }
+    assert_raises(ArgumentError) { @user.switch_systems(new_system, @our_solar_system) }
+  end
+  
+  def test_that_user_cannot_switch_from_a_nonsystem
+    current_system = "Kepler-20"
+    assert_raises(ArgumentError) { @user.switch_systems(@kepler_system, current_system) }
   end
   
 end

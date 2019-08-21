@@ -34,4 +34,21 @@ class TestConstallation < Minitest::Test
     assert_equal @our_constellation.list_systems, "List of systems in this constellation:\n1. Sol System\n2. Kepler-20 System"
   end
   
+  def test_find_system_by_name
+    @our_constellation.add_system(@kepler_system)
+    assert_equal @our_constellation.find_system_by_name("Kepler-20"), @kepler_system
+  end
+  
+  def test_find_system_does_not_find_nonsystem
+    assert_equal @our_constellation.find_system_by_name("Alpha Centauri"), "No such system found"
+  end
+  
+  def test_find_system_lists_multiple_systems
+    dup_kepler_system = SolarSystem.new(star_name: "Kepler-20")
+    @our_constellation.add_system(@kepler_system)
+    @our_constellation.add_system(dup_kepler_system)
+    
+    assert_equal @our_constellation.find_system_by_name("Kepler-20"), "Multiple systems with that star were found. These were:\n1. #{@kepler_system}\n2. #{dup_kepler_system}"
+  end
+  
 end

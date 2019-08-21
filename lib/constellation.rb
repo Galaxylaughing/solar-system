@@ -28,12 +28,14 @@ class Constellation
     
     if systems_found.length == 1
       found_system = systems_found[0]
-    elsif planets_found.length > 1
+    elsif systems_found.length > 1
       found_system = "Multiple systems with that star were found. These were:"
       systems_found.each_with_index do |system_instance, index|
         found_system << "\n#{index + 1}. #{system_instance}"
       end
     end
+    
+    return found_system
   end
   
 end
