@@ -1,8 +1,13 @@
 require_relative "planet.rb"
 require_relative "solar_system"
+require_relative "constellation.rb"
 require_relative "user.rb"
 
 ## VARIABLES
+
+# create new constellation
+current_constellation = Constellation.new("Constellation")
+
 # create solar system
 our_solar_system = SolarSystem.new(star_name: "Sol")
 
@@ -27,6 +32,10 @@ kepler_system.add_planet(Planet.new("Kepler-20d", "unknown color", mass_kg: 6.01
 kepler_system.add_planet(Planet.new("Kepler-20e", "dark red", mass_kg: 1.839376e25, distance_from_sun_km: 290.0, fun_fact: "First planet smaller than Earth discovered to orbit a sun other than Sol"))
 
 kepler_system.add_planet(Planet.new("Kepler-20f", "unknown color", mass_kg: 6.0132068e25, distance_from_sun_km: 290.0, fun_fact: "Planet with the closest radius to Earth"))
+
+# add systems to constellation
+current_constellation.add_system(our_solar_system)
+current_constellation.add_system(kepler_system)
 
 
 ## METHODS
@@ -101,7 +110,13 @@ def display_planet_details(solar_system)
   puts planet.summary
 end
 
-def ask_user_for_commands(solar_system)
+def ask_user_for_commands(constellation)
+  # establish default solar system
+  current_solar_system = constellation.systems_list[0]
+  # establish user
+  current_user = User.new(current_solar_system)
+  
+  # ask user for commands
   user_input = ""
   until !user_input
     print "Please enter a command: "
@@ -110,14 +125,19 @@ def ask_user_for_commands(solar_system)
     case user_input
     when :exit
       user_input = false
+    when :"list systems"
+      puts constellation.list_systems()
+    when :"switch system"
+      # ask user what system they want to switch to
+      # current_user.switch_systems(new_system)
     when :"list planets"
-      puts solar_system.list_planets()
+      puts current_solar_system.list_planets()
     when :"planet details"
-      display_planet_details(solar_system)
+      display_planet_details(current_solar_system)
     when :"add planet"
-      add_new_planet(solar_system)
+      add_new_planet(current_solar_system)
     when :"distance between planets"
-      find_distance_between(solar_system)
+      find_distance_between(current_solar_system)
     else
       puts "  #{user_input} is not a valid command"
     end
@@ -126,4 +146,4 @@ def ask_user_for_commands(solar_system)
 end
 
 ## MAIN CODE
-ask_user_for_commands(our_solar_system)
+ask_user_for_commands(current_constellation)
