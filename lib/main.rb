@@ -41,8 +41,8 @@ current_constellation.add_system(kepler_system)
 ## METHODS
 def find_distance_between(solar_system)
   prompt = "Please enter the"
-  planet_1 = ask_for_planet_name(solar_system, prompt: (prompt + " first planet: "))
-  planet_2 = ask_for_planet_name(solar_system, prompt: (prompt + " second planet: "))
+  planet_1 = ask_for_object_name(:solar_system, object_name: solar_system, prompt: (prompt + " first planet: "))
+  planet_2 = ask_for_object_name(:solar_system, object_name: solar_system, prompt: (prompt + " second planet: "))
   
   puts "The distance between #{planet_1.name} and #{planet_2.name} is #{solar_system.distance_between(planet_1, planet_2)} km."
 end
@@ -91,44 +91,42 @@ def add_new_planet(solar_system)
 end
 
 
-def ask_for_planet_name(solar_system, prompt:)
+def ask_for_object_name(object_type, object_name:, prompt:)
   keep_asking = true
   until !keep_asking
     print prompt
     user_input = gets.chomp.downcase
-    if solar_system.find_planet_by_name(user_input) == "No such planet found"
-      puts "  #{user_input} is not a valid planet"
+    
+    case object_type
+    when :solar_system
+      if object_name.find_planet_by_name(user_input) == "No such planet found"
+        puts "  #{user_input} is not a valid planet"
+      else
+        new_object = object_name.find_planet_by_name(user_input)
+        keep_asking = false
+      end
+    when :constellation
+      if object_name.find_system_by_name(user_input) == "No such system found"
+        puts "  #{user_input} is not a valid solar system"
+      else
+        new_object = object_name.find_system_by_name(user_input)
+        keep_asking = false
+      end
     else
-      planet = solar_system.find_planet_by_name(user_input)
-      keep_asking = false
+      raise ArgumentError, "#{object_type} is not a known object"
     end
+    
   end
-  return planet
+  return new_object
 end
-
-def ask_for_system_name(constellation, prompt:)
-  keep_asking = true
-  until !keep_asking
-    print prompt
-    user_input = gets.chomp.downcase
-    if constellation.find_system_by_name(user_input) == "No such system found"
-      puts "  #{user_input} is not a valid solar system"
-    else
-      solar_system = constellation.find_system_by_name(user_input)
-      keep_asking = false
-    end
-  end
-  return solar_system
-end
-
 
 def display_planet_details(solar_system)
-  planet = ask_for_planet_name(solar_system, prompt: "Please enter a planet: ")
+  planet = ask_for_object_name(:solar_system, object_name: solar_system, prompt: "Please enter a planet: ")
   puts planet.summary
 end
 
 def switch_systems(user, constellation, current_system)
-  user_choice = ask_for_system_name(constellation, prompt: "Please enter a solar system: ")
+  user_choice = ask_for_object_name(:constellation, object_name: constellation, prompt: "Please enter a solar system: ")
   current_system = user.switch_systems(user_choice, current_system)
   return current_system
 end
