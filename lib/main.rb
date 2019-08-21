@@ -90,6 +90,7 @@ def add_new_planet(solar_system)
   solar_system.add_planet(new_planet)
 end
 
+
 def ask_for_planet_name(solar_system, prompt:)
   keep_asking = true
   until !keep_asking
@@ -120,58 +121,56 @@ def ask_for_system_name(constellation, prompt:)
   return solar_system
 end
 
-def 
+
+def display_planet_details(solar_system)
+  planet = ask_for_planet_name(solar_system, prompt: "Please enter a planet: ")
+  puts planet.summary
+end
+
+def switch_systems(user, constellation, current_system)
+  user_choice = ask_for_system_name(constellation, prompt: "Please enter a solar system: ")
+  current_system = user.switch_systems(user_choice, current_system)
+  return current_system
+end
+
+def ask_user_for_commands(constellation)
+  # establish default solar system
+  current_solar_system = constellation.systems_list[0]
+  # establish user
+  current_user = User.new(current_solar_system)
   
-  def display_planet_details(solar_system)
-    planet = ask_for_planet_name(solar_system, prompt: "Please enter a planet: ")
-    puts planet.summary
-  end
-  
-  def switch_systems(user, constellation, current_system)
-    # user_choice = ask_user_for_system(constellation)
-    user_choice = ask_for_system_name(constellation, prompt: "Please enter a solar system: ")
-    current_system = user.switch_systems(user_choice, current_system)
-    return current_system
-  end
-  
-  def ask_user_for_commands(constellation)
-    # establish default solar system
-    current_solar_system = constellation.systems_list[0]
-    # establish user
-    current_user = User.new(current_solar_system)
+  # ask user for commands
+  user_input = ""
+  until !user_input
+    print "Please enter a command: "
+    user_input = gets.chomp.downcase.to_sym
     
-    # ask user for commands
-    user_input = ""
-    until !user_input
-      print "Please enter a command: "
-      user_input = gets.chomp.downcase.to_sym
-      
-      case user_input
-      when :exit
-        user_input = false
-      when :"current system"
-        puts "The current solar system is: #{current_solar_system.star_name} System"
-      when :"list systems"
-        puts constellation.list_systems()
-      when :"switch system"
-        current_solar_system = switch_systems(current_user, constellation, current_solar_system)
-      when :"list planets"
-        puts current_solar_system.list_planets()
-      when :"planet details"
-        display_planet_details(current_solar_system)
-      when :"add planet"
-        add_new_planet(current_solar_system)
-      when :"distance between planets"
-        find_distance_between(current_solar_system)
-      else
-        puts "  #{user_input} is not a valid command"
-      end
-      
+    case user_input
+    when :exit
+      user_input = false
+    when :"current system"
+      puts "The current solar system is: #{current_solar_system.star_name} System"
+    when :"list systems"
+      puts constellation.list_systems()
+    when :"switch system"
+      current_solar_system = switch_systems(current_user, constellation, current_solar_system)
+    when :"list planets"
+      puts current_solar_system.list_planets()
+    when :"planet details"
+      display_planet_details(current_solar_system)
+    when :"add planet"
+      add_new_planet(current_solar_system)
+    when :"distance between planets"
+      find_distance_between(current_solar_system)
+    else
+      puts "  #{user_input} is not a valid command"
     end
+    
   end
-  
-  ## MAIN CODE
-  ask_user_for_commands(current_constellation)
-  
-  # still to do:
-  # see if I can DRY up the ask_for_system_name and ask_for_planet_name methods
+end
+
+## MAIN CODE
+ask_user_for_commands(current_constellation)
+
+# still to do:
+# see if I can DRY up the ask_for_system_name and ask_for_planet_name methods
