@@ -131,7 +131,27 @@ def switch_systems(user, constellation, current_system)
   return current_system
 end
 
-def ask_user_for_commands(constellation)
+def list_possible_commands()
+  possible_commands = {
+    :exit => "exit the program",
+    :"list commands" => "list all possible commands",
+    :"get current system" => "identify current system",
+    :"list systems" => "list all systems",
+    :"switch systems" => "switch to a different system",
+    :"list planets" => "list planets in current system",
+    :"get planet details" => "enter a planet and recieve its information",
+    :"add planet" => "add a planet to the current system",
+    :"find distance between" => "enter two planets and receive the distance between them"
+  }
+  
+  list_of_commands = "Here are the possible commands:"
+  possible_commands.each_pair do |command_name, command_info|
+    list_of_commands << "\n  enter \"#{command_name.to_s}\" to #{command_info}"
+  end
+  return list_of_commands
+end
+
+def ask_user_for_commands(constellation)  
   # establish default solar system
   current_solar_system = constellation.systems_list[0]
   # establish user
@@ -146,19 +166,21 @@ def ask_user_for_commands(constellation)
     case user_input
     when :exit
       user_input = false
-    when :"current system"
+    when :"list commands"
+      puts list_possible_commands()
+    when :"get current system"
       puts "The current solar system is: #{current_solar_system.star_name} System"
     when :"list systems"
       puts constellation.list_systems()
-    when :"switch system"
+    when :"switch systems"
       current_solar_system = switch_systems(current_user, constellation, current_solar_system)
     when :"list planets"
       puts current_solar_system.list_planets()
-    when :"planet details"
+    when :"get planet details"
       display_planet_details(current_solar_system)
     when :"add planet"
       add_new_planet(current_solar_system)
-    when :"distance between planets"
+    when :"find distance between"
       find_distance_between(current_solar_system)
     else
       puts "  #{user_input} is not a valid command"
@@ -169,6 +191,3 @@ end
 
 ## MAIN CODE
 ask_user_for_commands(current_constellation)
-
-# still to do:
-# see if I can DRY up the ask_for_system_name and ask_for_planet_name methods
